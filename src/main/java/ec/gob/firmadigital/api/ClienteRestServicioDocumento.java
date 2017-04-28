@@ -32,7 +32,7 @@ import javax.ws.rs.core.MediaType;
 public class ClienteRestServicioDocumento {
 
     // FIXME: Externalize
-    private static String REST_SERVICE_URL = "http://localhost:8080/servicio/documentos";
+    private static String REST_SERVICE_URL = "https://servicio.firmadigital.gob.ec/servicio/documentos";
 
     public String obtenerDocumento(String token) {
         Client client = ClientBuilder.newClient();
