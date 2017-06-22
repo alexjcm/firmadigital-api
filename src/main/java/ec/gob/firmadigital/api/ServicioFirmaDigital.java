@@ -18,6 +18,7 @@
 
 package ec.gob.firmadigital.api;
 
+import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -51,6 +52,20 @@ public class ServicioFirmaDigital {
     }
 
     /**
+     * Obterner un documento mediante una invocación REST a
+     * servicio.firmadigital.gob.ec
+     * 
+     * @param token
+     * @return
+     */
+    @GET
+    @Path("{token}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String obtenerDocumentos(@PathParam("token") String token) {
+        return clienteServicioFirmaDigital.obtenerDocumentos(token);
+    }
+
+    /**
      * Actualizar un documento mediante una invocación REST a
      * servicio.firmadigital.gob.ec
      * 
@@ -63,6 +78,22 @@ public class ServicioFirmaDigital {
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
     public String actualizarDocumento(@PathParam("token") String token, String documento) {
-        return clienteServicioFirmaDigital.guardarDocumento(token, documento);
+        return clienteServicioFirmaDigital.actualizarDocumento(token, documento);
+    }
+    
+    /**
+     * Actualizar un documento mediante una invocación REST a
+     * servicio.firmadigital.gob.ec
+     * 
+     * @param token
+     * @param documento
+     * @return
+     */
+    @PUT
+    @Path("{token}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String actualizarDocumentos(@PathParam("token") String token, JsonObject json) {
+        return clienteServicioFirmaDigital.actualizarDocumentos(token, json);
     }
 }
