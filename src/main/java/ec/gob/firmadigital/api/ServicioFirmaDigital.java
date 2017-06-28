@@ -1,6 +1,6 @@
 /*
  * Firma Digital: API
- * Copyright (C) 2017 Secretaría Nacional de la Administración Pública
+ * Copyright 2017 Secretaría Nacional de la Administración Pública
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,42 +18,44 @@
 
 package ec.gob.firmadigital.api;
 
-import javax.json.JsonObject;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 /**
  * Servicio REST para utilizar desde la aplicación del lado del cliente.
+ * 
+ * Es a su vez un cliente REST para invocar servicios provistos en
+ * ws.firmadigital.gob.ec
+ * 
+ * Este mecanismo permite invocar los servicios internos desde un cliente
+ * externo.
  * 
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
  */
 @Path("/firmadigital")
 public class ServicioFirmaDigital {
 
-    private ClienteRestServicioDocumento clienteServicioFirmaDigital = new ClienteRestServicioDocumento();
+    // Servicio REST interno
+    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/documentos";
 
     /**
      * Obterner un documento mediante una invocación REST a
-     * servicio.firmadigital.gob.ec
-     * 
-     * @param token
-     * @return
-     */
-    @GET
-    @Path("{token}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String obtenerDocumento(@PathParam("token") String token) {
-        return clienteServicioFirmaDigital.obtenerDocumento(token);
-    }
-
-    /**
-     * Obterner un documento mediante una invocación REST a
-     * servicio.firmadigital.gob.ec
+     * ws.firmadigital.gob.ec
      * 
      * @param token
      * @return
@@ -61,39 +63,54 @@ public class ServicioFirmaDigital {
     @GET
     @Path("{token}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String obtenerDocumentos(@PathParam("token") String token) {
-        return clienteServicioFirmaDigital.obtenerDocumentos(token);
+    public Response obtenerDocumentos(@PathParam("token") String token) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
+        Builder builder = target.request(MediaType.APPLICATION_JSON);
+        Invocation invocation = builder.buildGet();
+
+        try {
+            String json = invocation.invoke(String.class);
+            return Response.ok(json).build();
+        } catch (BadRequestException e) {
+            String mensaje = e.getResponse().readEntity(String.class);
+            return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity(mensaje).build();
+        } catch (WebApplicationException e) {
+            String mensaje = e.getResponse().readEntity(String.class);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
+                    "Error al invocar servicio de obtencion de documentos en ws.firmadigital.gob.ec: " + mensaje)
+                    .build();
+        }
     }
 
     /**
      * Actualizar un documento mediante una invocación REST a
-     * servicio.firmadigital.gob.ec
+     * ws.firmadigital.gob.ec
      * 
      * @param token
-     * @param documento
-     * @return
-     */
-    @PUT
-    @Path("{token}")
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.TEXT_PLAIN)
-    public String actualizarDocumento(@PathParam("token") String token, String documento) {
-        return clienteServicioFirmaDigital.actualizarDocumento(token, documento);
-    }
-    
-    /**
-     * Actualizar un documento mediante una invocación REST a
-     * servicio.firmadigital.gob.ec
-     * 
-     * @param token
-     * @param documento
+     * @param json
      * @return
      */
     @PUT
     @Path("{token}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String actualizarDocumentos(@PathParam("token") String token, JsonObject json) {
-        return clienteServicioFirmaDigital.actualizarDocumentos(token, json);
+    public Response actualizarDocumentos(@PathParam("token") String token, String json) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
+        Builder builder = target.request();
+        Invocation invocation = builder.buildPut(Entity.json(json));
+
+        try {
+            invocation.invoke(String.class);
+            return Response.noContent().build();
+        } catch (BadRequestException e) {
+            String mensaje = e.getResponse().readEntity(String.class);
+            return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity(mensaje).build();
+        } catch (WebApplicationException e) {
+            String mensaje = e.getResponse().readEntity(String.class);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
+                    "Error al invocar servicio de obtencion de documentos en ws.firmadigital.gob.ec: " + mensaje)
+                    .build();
+        }
     }
 }
