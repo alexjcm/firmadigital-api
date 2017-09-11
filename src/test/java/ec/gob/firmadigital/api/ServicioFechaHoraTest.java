@@ -20,16 +20,11 @@ package ec.gob.firmadigital.api;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.io.StringReader;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.logging.Logger;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 
 import org.junit.Test;
 
@@ -45,12 +40,8 @@ public class ServicioFechaHoraTest {
     @Test
     public void testFechaHora() throws Exception {
         ServicioFechaHora servicioFechaHora = new ServicioFechaHora();
-        String fechaHoraJson = servicioFechaHora.getFechaHora();
-        logger.info("fechaHoraJson=" + fechaHoraJson);
-
-        JsonReader jsonReader = Json.createReader(new StringReader(fechaHoraJson));
-        JsonObject json = (JsonObject) jsonReader.read();
-        String fechaHora = json.getString("fecha_hora");
+        String fechaHora = servicioFechaHora.getFechaHora();
+        logger.info("fechaHora=" + fechaHora);
 
         DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
         TemporalAccessor accessor = timeFormatter.parse(fechaHora);

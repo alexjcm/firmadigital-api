@@ -42,12 +42,8 @@ public class ServicioFechaHora {
      * @return
      */
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public String getFechaHora() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("{ \"fecha_hora\" : \"");
-        sb.append(ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        sb.append("\" }\n");
-        return sb.toString();
+        return ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
 }
