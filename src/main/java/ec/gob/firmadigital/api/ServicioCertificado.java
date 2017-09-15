@@ -38,7 +38,7 @@ import javax.ws.rs.core.MediaType;
 public class ServicioCertificado {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "http://localhost:8080/servicio/certificado/revocado";
+    private static final String REST_SERVICE_URL = "https://api.firmadigital.gob.ec/servicio/certificado/revocado";
 
     @GET
     @Path("/revocado/{serial}")
