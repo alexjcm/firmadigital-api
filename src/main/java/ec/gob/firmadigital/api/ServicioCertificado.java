@@ -18,6 +18,8 @@
 
 package ec.gob.firmadigital.api;
 
+import java.math.BigInteger;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -43,7 +45,7 @@ public class ServicioCertificado {
     @GET
     @Path("/revocado/{serial}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String validarCertificado(@PathParam("serial") Integer serial) {
+    public String validarCertificado(@PathParam("serial") BigInteger serial) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL).path("{serial}").resolveTemplate("serial", serial);
         Builder builder = target.request(MediaType.TEXT_PLAIN);
