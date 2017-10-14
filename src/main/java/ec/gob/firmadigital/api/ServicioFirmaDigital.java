@@ -38,13 +38,13 @@ import javax.ws.rs.core.Response.Status;
 
 /**
  * Servicio REST para utilizar desde la aplicación del lado del cliente.
- * 
+ *
  * Es a su vez un cliente REST para invocar servicios provistos en
  * ws.firmadigital.gob.ec
- * 
+ *
  * Este mecanismo permite invocar los servicios internos desde un cliente
  * externo.
- * 
+ *
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
  */
 @Path("/firmadigital")

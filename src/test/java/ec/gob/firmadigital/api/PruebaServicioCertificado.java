@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 /**
  * Esta clase permite probar el servicio REST que verifica un certificado
  * digital mediante el CRL almacenado en la base de datos del servicio.
- * 
+ *
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
  */
 public class PruebaServicioCertificado {

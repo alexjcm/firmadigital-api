@@ -29,7 +29,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * Este servicio permite obtener la fecha y hora del servidor en formato
  * ISO-8601.
- * 
+ *
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
  */
 @Path("/fecha-hora")

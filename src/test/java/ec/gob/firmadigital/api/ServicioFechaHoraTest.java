@@ -30,7 +30,7 @@ import org.junit.Test;
 
 /**
  * Prueba para ServicioFechaHora
- * 
+ *
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
  */
 public class ServicioFechaHoraTest {

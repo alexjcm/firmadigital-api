@@ -33,7 +33,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  * Este servicio permite verificar si un certificado está revocado.
- * 
+ *
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
  */
 @Path("/certificado")
