@@ -54,9 +54,8 @@ public class ServicioFirmaDigital {
     private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/documentos";
 
     /**
-     * Obterner un documento mediante una invocación REST a
-     * ws.firmadigital.gob.ec
-     * 
+     * Obterner un documento mediante una invocación REST a ws.firmadigital.gob.ec
+     *
      * @param token
      * @return
      */
@@ -84,9 +83,8 @@ public class ServicioFirmaDigital {
     }
 
     /**
-     * Actualizar un documento mediante una invocación REST a
-     * ws.firmadigital.gob.ec
-     * 
+     * Actualizar un documento mediante una invocación REST a ws.firmadigital.gob.ec
+     *
      * @param token
      * @param json
      * @return
