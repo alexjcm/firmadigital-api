@@ -99,8 +99,8 @@ public class ServicioFirmaDigital {
         Invocation invocation = builder.buildPut(Entity.json(json));
 
         try {
-            invocation.invoke(String.class);
-            return Response.noContent().build();
+            String jsonResponse = invocation.invoke(String.class);
+            return Response.ok(jsonResponse).header("Content-Length", jsonResponse.length()).build();
         } catch (BadRequestException e) {
             String mensaje = e.getResponse().readEntity(String.class);
             return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity(mensaje).build();
