@@ -35,15 +35,15 @@ import javax.ws.rs.core.MediaType;
 @Path("/fecha-hora")
 public class ServicioFechaHora {
 
-    /**
-     * Retorna la fecha y hora del servidor, en formato ISO-8601. Por ejemplo:
-     * "2017-08-27T17:54:43.562-05:00"
-     * 
-     * @return
-     */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getFechaHora() {
-        return ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-    }
+	/**
+	 * Retorna la fecha y hora del servidor, en formato ISO-8601. Por ejemplo:
+	 * "2017-08-27T17:54:43.562-05:00"
+	 *
+	 * @return
+	 */
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getFechaHora() {
+		return ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+	}
 }

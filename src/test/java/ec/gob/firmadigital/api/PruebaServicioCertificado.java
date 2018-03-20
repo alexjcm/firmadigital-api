@@ -34,39 +34,39 @@ import java.util.logging.Logger;
  */
 public class PruebaServicioCertificado {
 
-    private static final String CERTIFICADO_URL = "https://api.firmadigital.gob.ec/api/certificado/revocado";
+	private static final String CERTIFICADO_URL = "https://api.firmadigital.gob.ec/api/certificado/revocado";
 
-    private static final Logger logger = Logger.getLogger(PruebaServicioCertificado.class.getName());
+	private static final Logger logger = Logger.getLogger(PruebaServicioCertificado.class.getName());
 
-    public boolean verificarCrlServidor(int serial) throws IOException {
-        URL url = new URL(CERTIFICADO_URL + "/" + serial);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        int responseCode = urlConnection.getResponseCode();
+	public boolean verificarCrlServidor(int serial) throws IOException {
+		URL url = new URL(CERTIFICADO_URL + "/" + serial);
+		HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+		int responseCode = urlConnection.getResponseCode();
 
-        if (responseCode != HttpURLConnection.HTTP_OK) {
-            logger.severe(CERTIFICADO_URL + " Response Code: " + responseCode);
-            return false;
-        }
+		if (responseCode != HttpURLConnection.HTTP_OK) {
+			logger.severe(CERTIFICADO_URL + " Response Code: " + responseCode);
+			return false;
+		}
 
-        try (InputStream is = urlConnection.getInputStream()) {
-            InputStreamReader reader = new InputStreamReader(is);
-            BufferedReader in = new BufferedReader(reader);
-            return Boolean.valueOf(in.readLine());
-        }
-    }
+		try (InputStream is = urlConnection.getInputStream()) {
+			InputStreamReader reader = new InputStreamReader(is);
+			BufferedReader in = new BufferedReader(reader);
+			return Boolean.valueOf(in.readLine());
+		}
+	}
 
-    public static void main(String[] args) throws Exception {
-        PruebaServicioCertificado main = new PruebaServicioCertificado();
-        int serial;
-        boolean valido;
+	public static void main(String[] args) throws Exception {
+		PruebaServicioCertificado main = new PruebaServicioCertificado();
+		int serial;
+		boolean valido;
 
-        // Este certificado si es valido
-        serial = 1312818414;
-        valido = main.verificarCrlServidor(serial);
-        logger.info("certificado " + serial + " revocado? " + valido);
+		// Este certificado si es valido
+		serial = 1312818414;
+		valido = main.verificarCrlServidor(serial);
+		logger.info("certificado " + serial + " revocado? " + valido);
 
-        serial = 1234567;
-        valido = main.verificarCrlServidor(serial);
-        logger.info("certificado " + serial + " revocado? " + valido);
-    }
+		serial = 1234567;
+		valido = main.verificarCrlServidor(serial);
+		logger.info("certificado " + serial + " revocado? " + valido);
+	}
 }

@@ -35,18 +35,18 @@ import org.junit.Test;
  */
 public class ServicioFechaHoraTest {
 
-    private static final Logger logger = Logger.getLogger(ServicioFechaHoraTest.class.getName());
+	private static final Logger logger = Logger.getLogger(ServicioFechaHoraTest.class.getName());
 
-    @Test
-    public void testFechaHora() throws Exception {
-        ServicioFechaHora servicioFechaHora = new ServicioFechaHora();
-        String fechaHora = servicioFechaHora.getFechaHora();
-        logger.info("fechaHora=" + fechaHora);
+	@Test
+	public void testFechaHora() throws Exception {
+		ServicioFechaHora servicioFechaHora = new ServicioFechaHora();
+		String fechaHora = servicioFechaHora.getFechaHora();
+		logger.info("fechaHora=" + fechaHora);
 
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-        TemporalAccessor accessor = timeFormatter.parse(fechaHora);
-        Date date = Date.from(Instant.from(accessor));
-        logger.info("date=" + date);
-        assertNotNull(date);
-    }
+		DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+		TemporalAccessor accessor = timeFormatter.parse(fechaHora);
+		Date date = Date.from(Instant.from(accessor));
+		logger.info("date=" + date);
+		assertNotNull(date);
+	}
 }
