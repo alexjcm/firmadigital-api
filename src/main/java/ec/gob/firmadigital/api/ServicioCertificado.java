@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package ec.gob.firmadigital.api;
 
 import java.math.BigInteger;
@@ -39,30 +38,32 @@ import javax.ws.rs.core.MediaType;
 @Path("/certificado")
 public class ServicioCertificado {
 
-	// Servicio REST interno
-	private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/certificado";
+    // Servicio REST interno
+    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/certificado";
 
-	@GET
-	@Path("/revocado/{serial}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String validarCertificado(@PathParam("serial") BigInteger serial) {
-		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(REST_SERVICE_URL + "/revocado").path("{serial}").resolveTemplate("serial",
-				serial);
-		Builder builder = target.request(MediaType.TEXT_PLAIN);
-		Invocation invocation = builder.buildGet();
-		return invocation.invoke(String.class);
-	}
+    @GET
+    @Path("/revocado/{serial}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String validarCertificado(@PathParam("serial") BigInteger serial) {
+//        Client client = TrustManagerUtil.getCliente();
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(REST_SERVICE_URL + "/revocado").path("{serial}").resolveTemplate("serial",
+                serial);
+        Builder builder = target.request(MediaType.TEXT_PLAIN);
+        Invocation invocation = builder.buildGet();
+        return invocation.invoke(String.class);
+    }
 
-	@GET
-	@Path("/fechaRevocado/{serial}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String validarFechaRevocado(@PathParam("serial") BigInteger serial) {
-		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(REST_SERVICE_URL + "/fechaRevocado").path("{serial}").resolveTemplate("serial",
-				serial);
-		Builder builder = target.request(MediaType.TEXT_PLAIN);
-		Invocation invocation = builder.buildGet();
-		return invocation.invoke(String.class);
-	}
+    @GET
+    @Path("/fechaRevocado/{serial}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String validarFechaRevocado(@PathParam("serial") BigInteger serial) {
+//        Client client = TrustManagerUtil.getCliente();
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(REST_SERVICE_URL + "/fechaRevocado").path("{serial}").resolveTemplate("serial",
+                serial);
+        Builder builder = target.request(MediaType.TEXT_PLAIN);
+        Invocation invocation = builder.buildGet();
+        return invocation.invoke(String.class);
+    }
 }
