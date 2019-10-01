@@ -1,7 +1,5 @@
 /*
  * Firma Digital: API
- * Copyright 2017 Secretaría Nacional de la Administración Pública
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -45,7 +43,6 @@ public class ServicioCertificado {
     @Path("/revocado/{serial}")
     @Produces(MediaType.TEXT_PLAIN)
     public String validarCertificado(@PathParam("serial") BigInteger serial) {
-//        Client client = TrustManagerUtil.getCliente();
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL + "/revocado").path("{serial}").resolveTemplate("serial",
                 serial);
@@ -58,7 +55,6 @@ public class ServicioCertificado {
     @Path("/fechaRevocado/{serial}")
     @Produces(MediaType.TEXT_PLAIN)
     public String validarFechaRevocado(@PathParam("serial") BigInteger serial) {
-//        Client client = TrustManagerUtil.getCliente();
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL + "/fechaRevocado").path("{serial}").resolveTemplate("serial",
                 serial);

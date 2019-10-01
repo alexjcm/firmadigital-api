@@ -1,7 +1,5 @@
 /*
  * Firma Digital: API
- * Copyright 2017 Secretaría Nacional de la Administración Pública
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -38,8 +36,7 @@ import javax.ws.rs.core.Response.Status;
 /**
  * Servicio REST para utilizar desde la aplicación del lado del cliente.
  *
- * Es a su vez un cliente REST para invocar servicios provistos en
- * ws.firmadigital.gob.ec
+ * Es a su vez un cliente REST para invocar servicios provistos
  *
  * Este mecanismo permite invocar los servicios internos desde un cliente
  * externo.
@@ -53,8 +50,7 @@ public class ServicioFirmaDigital {
     private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/documentos";
 
     /**
-     * Obterner un documento mediante una invocación REST a
-     * ws.firmadigital.gob.ec
+     * Obterner un documento mediante una invocación REST
      *
      * @param token
      * @return
@@ -63,7 +59,6 @@ public class ServicioFirmaDigital {
     @Path("{token}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerDocumentos(@PathParam("token") String token) {
-//        Client client = TrustManagerUtil.getCliente();
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
         Builder builder = target.request(MediaType.APPLICATION_JSON);
@@ -84,8 +79,7 @@ public class ServicioFirmaDigital {
     }
 
     /**
-     * Actualizar un documento mediante una invocación REST a
-     * ws.firmadigital.gob.ec
+     * Actualizar un documento mediante una invocación REST
      *
      * @param token
      * @param json
@@ -95,7 +89,6 @@ public class ServicioFirmaDigital {
     @Path("{token}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response actualizarDocumentos(@PathParam("token") String token, String json) {
-//        Client client = TrustManagerUtil.getCliente();
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
         Builder builder = target.request();

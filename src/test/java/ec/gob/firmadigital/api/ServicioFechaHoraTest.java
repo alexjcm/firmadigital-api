@@ -1,7 +1,5 @@
 /*
  * Firma Digital: API
- * Copyright 2017 Secretaría Nacional de la Administración Pública
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +13,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package ec.gob.firmadigital.api;
 
 import static org.junit.Assert.assertNotNull;
@@ -35,18 +32,18 @@ import org.junit.Test;
  */
 public class ServicioFechaHoraTest {
 
-	private static final Logger logger = Logger.getLogger(ServicioFechaHoraTest.class.getName());
+    private static final Logger logger = Logger.getLogger(ServicioFechaHoraTest.class.getName());
 
-	@Test
-	public void testFechaHora() throws Exception {
-		ServicioFechaHora servicioFechaHora = new ServicioFechaHora();
-		String fechaHora = servicioFechaHora.getFechaHora();
-		logger.info("fechaHora=" + fechaHora);
+    @Test
+    public void testFechaHora() throws Exception {
+        ServicioFechaHora servicioFechaHora = new ServicioFechaHora();
+        String fechaHora = servicioFechaHora.getFechaHora();
+        logger.info("fechaHora=" + fechaHora);
 
-		DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-		TemporalAccessor accessor = timeFormatter.parse(fechaHora);
-		Date date = Date.from(Instant.from(accessor));
-		logger.info("date=" + date);
-		assertNotNull(date);
-	}
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+        TemporalAccessor accessor = timeFormatter.parse(fechaHora);
+        Date date = Date.from(Instant.from(accessor));
+        logger.info("date=" + date);
+        assertNotNull(date);
+    }
 }
