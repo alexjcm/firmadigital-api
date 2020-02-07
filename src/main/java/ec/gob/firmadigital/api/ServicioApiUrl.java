@@ -30,8 +30,6 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 /**
  * Permite validar la si un API URL es permitido.
@@ -48,20 +46,17 @@ public class ServicioApiUrl {
 
     @GET
     @Path("{url}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response validarEndpoint(@PathParam("url") String url) {
+    @Produces(MediaType.TEXT_PLAIN)
+    public String validarEndpoint(@PathParam("url") String url) {
         logger.info("url=" + url);
-
         try {
-            String json = buscar(url);
-            logger.info("json=" + json);
-            return Response.ok(json).build();
+            return buscarUrl(url);
         } catch (NotFoundException e) {
-            return Response.status(Status.NOT_FOUND).build();
+            return "No se encuentra el servidor de búsqueda";
         }
     }
 
-    private String buscar(String url) throws NotFoundException {
+    private String buscarUrl(String url) throws NotFoundException {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL).path("{url}").resolveTemplate("url", url);
         Builder builder = target.request();
