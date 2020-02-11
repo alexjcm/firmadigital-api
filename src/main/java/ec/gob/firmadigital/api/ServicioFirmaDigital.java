@@ -73,7 +73,7 @@ public class ServicioFirmaDigital {
         } catch (WebApplicationException e) {
             String mensaje = e.getResponse().readEntity(String.class);
             return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
-                    "Error al invocar servicio de obtencion de documentos en ws.firmadigital.gob.ec: " + mensaje)
+                    "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + mensaje)
                     .build();
         }
     }
@@ -108,7 +108,7 @@ public class ServicioFirmaDigital {
             String mensaje = e.getResponse().readEntity(String.class
             );
             return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
-                    "Error al invocar servicio de obtencion de documentos en ws.firmadigital.gob.ec: " + mensaje)
+                    "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + mensaje)
                     .build();
         }
     }
