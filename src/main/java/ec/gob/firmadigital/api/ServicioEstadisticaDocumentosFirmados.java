@@ -33,17 +33,17 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 /**
- * Permite validar la si un API URL es permitido.
+ * Permite obtener estadisticas.
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * @author mfernandez
  */
-@Path("/url")
-public class ServicioApiUrl {
+@Path("/estadisticadocumentosfirmados")
+public class ServicioEstadisticaDocumentosFirmados {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/apiurl";
+    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/estadisticadocumentosfirmados";
 
-    private static final Logger logger = Logger.getLogger(ServicioApiUrl.class.getName());
+    private static final Logger logger = Logger.getLogger(ServicioEstadisticaDocumentosFirmados.class.getName());
 
     @GET
     @Path("{json}")
@@ -52,13 +52,13 @@ public class ServicioApiUrl {
     public String validarEndpoint(@PathParam("json") String jsonParameter) {
         logger.info("json=" + jsonParameter);
         try {
-            return buscarUrl(jsonParameter);
+            return buscarPorFechaDesdeFechaHasta(jsonParameter);
         } catch (NotFoundException e) {
             return "No se encuentra el servidor de búsqueda";
         }
     }
 
-    private String buscarUrl(String json) throws NotFoundException {
+    private String buscarPorFechaDesdeFechaHasta(String json) throws NotFoundException {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL).path("{json}").resolveTemplate("json", json);
         Builder builder = target.request();
