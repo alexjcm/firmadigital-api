@@ -8,7 +8,7 @@
     <packaging>war</packaging>
 
     <name>firmadigital-api</name>
-    <description>API de Firma Digital</description>
+    <description>API de Firma Digital.</description>
     <url>http://www.firmadigital.gob.ec</url>
     <licenses>
         <license>
