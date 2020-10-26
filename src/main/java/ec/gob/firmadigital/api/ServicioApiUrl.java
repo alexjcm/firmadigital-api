@@ -18,7 +18,6 @@
 package ec.gob.firmadigital.api;
 
 import java.util.logging.Logger;
-import javax.ws.rs.Consumes;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
@@ -42,26 +41,25 @@ public class ServicioApiUrl {
 
     // Servicio REST interno
     private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/apiurl";
-    //private static final String REST_SERVICE_URL = "http://wsfederada.firmadigital.gob.ec/servicio/apiurl";
+//    private static final String REST_SERVICE_URL = "https://wsfederada.firmadigital.gob.ec/servicio/apiurl";
 
     private static final Logger logger = Logger.getLogger(ServicioApiUrl.class.getName());
 
     @GET
-    @Path("{json}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{base64}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String validarEndpoint(@PathParam("json") String jsonParameter) {
-        logger.info("json=" + jsonParameter);
+    public String validarEndpoint(@PathParam("base64") String base64) {
+        logger.info("base64=" + base64);
         try {
-            return buscarUrl(jsonParameter);
+            return buscarUrl(base64);
         } catch (NotFoundException e) {
             return "No se encuentra el servidor de búsqueda";
         }
     }
 
-    private String buscarUrl(String json) throws NotFoundException {
+    private String buscarUrl(String base64) throws NotFoundException {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(REST_SERVICE_URL).path("{json}").resolveTemplate("json", json);
+        WebTarget target = client.target(REST_SERVICE_URL).path("{base64}").resolveTemplate("base64", base64);
         Builder builder = target.request();
         Invocation invocation = builder.buildGet();
         return invocation.invoke(String.class);

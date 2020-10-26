@@ -38,7 +38,7 @@ public class ServicioCertificado {
 
     // Servicio REST interno
     private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/certificado";
-    //private static final String REST_SERVICE_URL = "http://wsfederada.firmadigital.gob.ec/servicio/certificado";
+//    private static final String REST_SERVICE_URL = "https://wsfederada.firmadigital.gob.ec/servicio/certificado";
 
     @GET
     @Path("/revocado/{serial}")

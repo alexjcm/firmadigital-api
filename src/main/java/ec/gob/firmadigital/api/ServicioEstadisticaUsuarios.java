@@ -42,7 +42,7 @@ public class ServicioEstadisticaUsuarios {
 
     // Servicio REST interno
     private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/estadisticausuarios";
-    //private static final String REST_SERVICE_URL = "http://wsfederada.firmadigital.gob.ec/servicio/estadisticausuarios";
+//    private static final String REST_SERVICE_URL = "https://wsfederada.firmadigital.gob.ec/servicio/estadisticausuarios";
 
     private static final Logger logger = Logger.getLogger(ServicioEstadisticaUsuarios.class.getName());
 
