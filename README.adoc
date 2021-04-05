@@ -12,4 +12,4 @@ mvn clean package
 
 == Cómo desplegar
 
-Se debe copiar el archivo `target/api.war` a la carpeta `standalone/deploy` de un servidor de aplicaciones WildFly 10.
+Se debe copiar el archivo `target/api.war` a la carpeta `standalone/deploy` de un servidor de aplicaciones WildFly 20.0.0
