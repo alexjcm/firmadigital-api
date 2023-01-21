@@ -16,7 +16,6 @@
 package ec.gob.firmadigital.api;
 
 import java.math.BigInteger;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,7 +23,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
@@ -38,7 +36,8 @@ public class ServicioCertificado {
 
     // Servicio REST interno
     private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/certificado";
-//    private static final String REST_SERVICE_URL = "https://wsfederada.firmadigital.gob.ec/servicio/certificado";
+//    private static final String REST_SERVICE_URL = "http://impws.firmadigital.gob.ec:8080/servicio/certificado";
+//    private static final String REST_SERVICE_URL = "http://localhost:8080/servicio/certificado";
 
     @GET
     @Path("/revocado/{serial}")
@@ -47,7 +46,7 @@ public class ServicioCertificado {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL + "/revocado").path("{serial}").resolveTemplate("serial",
                 serial);
-        Builder builder = target.request(MediaType.TEXT_PLAIN);
+        Invocation.Builder builder = target.request();
         Invocation invocation = builder.buildGet();
         return invocation.invoke(String.class);
     }
@@ -59,7 +58,7 @@ public class ServicioCertificado {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL + "/fechaRevocado").path("{serial}").resolveTemplate("serial",
                 serial);
-        Builder builder = target.request(MediaType.TEXT_PLAIN);
+        Invocation.Builder builder = target.request();
         Invocation invocation = builder.buildGet();
         return invocation.invoke(String.class);
     }

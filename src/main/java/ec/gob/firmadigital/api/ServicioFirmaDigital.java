@@ -17,6 +17,7 @@ package ec.gob.firmadigital.api;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -29,6 +30,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -48,7 +50,8 @@ public class ServicioFirmaDigital {
 
     // Servicio REST interno
     private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/documentos";
-    //private static final String REST_SERVICE_URL = "https://wsfederada.firmadigital.gob.ec/servicio/documentos";
+//    private static final String REST_SERVICE_URL = "http://impws.firmadigital.gob.ec:8080/servicio/documentos";
+//    private static final String REST_SERVICE_URL = "http://localhost:8080/servicio/documentos";
 
     /**
      * Obterner un documento mediante una invocación REST
@@ -70,9 +73,21 @@ public class ServicioFirmaDigital {
             return Response.ok(json).header("Content-Length", json.length()).build();
         } catch (BadRequestException e) {
             String mensaje = e.getResponse().readEntity(String.class);
+//            String mensaje;
+//            if (e.getResponse().hasEntity()) {
+//                mensaje = e.getResponse().readEntity(String.class);
+//            } else {
+//                mensaje = e.toString();
+//            }
             return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity(mensaje).build();
         } catch (WebApplicationException e) {
             String mensaje = e.getResponse().readEntity(String.class);
+//            String mensaje;
+//            if (e.getResponse().hasEntity()) {
+//                mensaje = e.getResponse().readEntity(String.class);
+//            } else {
+//                mensaje = e.toString();
+//            }
             return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
                     "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + mensaje)
                     .build();
@@ -84,32 +99,36 @@ public class ServicioFirmaDigital {
      *
      * @param token
      * @param json
+     * @param base64
      * @return
      */
     @PUT
     @Path("{token}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response actualizarDocumentos(@PathParam("token") String token, String json) {
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response actualizarDocumentos(@PathParam("token") String token, @FormParam("json") String json, @FormParam("base64") String base64) {
+        if (json == null) {
+            return Response.status(Status.BAD_REQUEST).entity("Se debe incluir json").build();
+        }
+        if (base64 == null) {
+            return Response.status(Status.BAD_REQUEST).entity("Se debe incluir base64").build();
+        }
+
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
         Builder builder = target.request();
-        Invocation invocation = builder.buildPut(Entity.json(json));
+        Form form = new Form();
+        form.param("json", json);
+        form.param("base64", base64);
+        Invocation invocation = builder.buildPut(Entity.form(form));
 
         try {
-            String jsonResponse = invocation.invoke(String.class
-            );
+            String jsonResponse = invocation.invoke(String.class);
             return Response.ok(jsonResponse).header("Content-Length", jsonResponse.length()).build();
-
         } catch (BadRequestException e) {
-            String mensaje = e.getResponse().readEntity(String.class
-            );
-            return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity(mensaje).build();
-
+            return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity(e.getResponse().readEntity(String.class)).build();
         } catch (WebApplicationException e) {
-            String mensaje = e.getResponse().readEntity(String.class
-            );
             return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
-                    "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + mensaje)
+                    "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + e.getResponse().readEntity(String.class))
                     .build();
         }
     }

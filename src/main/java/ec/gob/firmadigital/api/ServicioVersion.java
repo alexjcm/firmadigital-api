@@ -18,50 +18,54 @@ package ec.gob.firmadigital.api;
 
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
+import javax.ws.rs.FormParam;
+
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 
 /**
- * Permite obtener estadisticas.
+ * Permite validar la versión permitido.
  *
- * @author mfernandez
+ * @author Christian Espinosa <christian.espinosa@mintel.gob.ec>, Misael
+ * Fernández
  */
-@Path("/estadisticausuarios")
-public class ServicioEstadisticaUsuarios {
+@Path("/version")
+public class ServicioVersion {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/estadisticausuarios";
-//    private static final String REST_SERVICE_URL = "http://impws.firmadigital.gob.ec:8080/servicio/estadisticausuarios";
-//    private static final String REST_SERVICE_URL = "http://localhost:8080/servicio/estadisticausuarios";
+    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/version";
+//    private static final String REST_SERVICE_URL = "http://impws.firmadigital.gob.ec:8080/servicio/version";
+//    private static final String REST_SERVICE_URL = "http://localhost:8080/servicio/version";
 
-    private static final Logger logger = Logger.getLogger(ServicioEstadisticaUsuarios.class.getName());
+    private static final Logger logger = Logger.getLogger(ServicioVersion.class.getName());
 
-    @GET
-    @Path("{json}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
-    public String validarEndpoint(@PathParam("json") String jsonParameter) {
-        logger.info("json=" + jsonParameter);
+    public String validarEndpoint(@FormParam("base64") String base64) {
         try {
-            return buscarPorFechaDesdeFechaHasta(jsonParameter);
+            return buscarVersion(base64);
         } catch (NotFoundException e) {
             return "No se encuentra el servidor de búsqueda";
         }
     }
 
-    private String buscarPorFechaDesdeFechaHasta(String json) throws NotFoundException {
+    private String buscarVersion(String base64) throws NotFoundException {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(REST_SERVICE_URL).path("{json}").resolveTemplate("json", json);
+        WebTarget target = client.target(REST_SERVICE_URL);
         Invocation.Builder builder = target.request();
-        Invocation invocation = builder.buildGet();
+        Form form = new Form();
+        form.param("base64", base64);
+        Invocation invocation = builder.buildPost(Entity.form(form));
         return invocation.invoke(String.class);
     }
 }

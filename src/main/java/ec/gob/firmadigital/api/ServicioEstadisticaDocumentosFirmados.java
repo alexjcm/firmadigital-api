@@ -14,12 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package ec.gob.firmadigital.api;
 
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
@@ -28,7 +26,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
@@ -42,7 +39,8 @@ public class ServicioEstadisticaDocumentosFirmados {
 
     // Servicio REST interno
     private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/estadisticadocumentosfirmados";
-//    private static final String REST_SERVICE_URL = "https://wsfederada.firmadigital.gob.ec/servicio/estadisticadocumentosfirmados";
+//    private static final String REST_SERVICE_URL = "http://impws.firmadigital.gob.ec:8080/servicio/estadisticadocumentosfirmados";
+//    private static final String REST_SERVICE_URL = "http://localhost:8080/servicio/estadisticadocumentosfirmados";
 
     private static final Logger logger = Logger.getLogger(ServicioEstadisticaDocumentosFirmados.class.getName());
 
@@ -62,7 +60,7 @@ public class ServicioEstadisticaDocumentosFirmados {
     private String buscarPorFechaDesdeFechaHasta(String json) throws NotFoundException {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL).path("{json}").resolveTemplate("json", json);
-        Builder builder = target.request();
+        Invocation.Builder builder = target.request();
         Invocation invocation = builder.buildGet();
         return invocation.invoke(String.class);
     }
