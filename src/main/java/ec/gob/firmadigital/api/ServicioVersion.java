@@ -17,20 +17,20 @@
 package ec.gob.firmadigital.api;
 
 import java.util.logging.Logger;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.FormParam;
 
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.Invocation;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Form;
+import jakarta.ws.rs.core.MediaType;
 
 /**
  * Permite validar la versión permitido.
@@ -42,9 +42,7 @@ import javax.ws.rs.core.MediaType;
 public class ServicioVersion {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/version";
-//    private static final String REST_SERVICE_URL = "http://impws.firmadigital.gob.ec:8080/servicio/version";
-//    private static final String REST_SERVICE_URL = "http://localhost:8080/servicio/version";
+    private static final String REST_SERVICE_URL = "http://testws.firmadigital.gob.ec:8080/servicio/version";
 
     private static final Logger logger = Logger.getLogger(ServicioVersion.class.getName());
 

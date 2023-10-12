@@ -1,15 +1,63 @@
-= Firma Digital: API
+= FirmaEC: firmadigital-api
 
-Este proyecto implementa los servicios REST para la aplicación de Firma Digital de la Secretaría Nacional de la Administración Pública del Ecuador.
+== Introducción
 
-== Cómo compilar
+Los siguientes pasos le permitirán obtener una copia del proyecto para correrla en la máquina local para propósitos de desarrollo y pruebas.
 
-Para compilar:
+=== Prerequisitos
 
+==== Java
+
+Se necesita instalar _Java Development Kit (JDK) 11_ para compilar y correr la aplicación.
+
+En Fedora se debe instalar el paquete _java-11-openjdk-devel_:
+
+[source, bash]
 ----
-mvn clean package
+$ sudo dnf -y install java-11-openjdk-devel
 ----
 
-== Cómo desplegar
+En Ubuntu se debe instalar el paquete _openjdk-11-jdk_.
 
-Se debe copiar el archivo `target/api.war` a la carpeta `standalone/deploy` de un servidor de aplicaciones WildFly 21.0.2
+[source, bash]
+----
+$ sudo apt-get install openjdk-11-jdk
+----
+
+==== WildFly
+
+Se puede utilizar hasta la versión _WildFly Application Server 29.0.1_, disponible en http://www.wildfly.org[wildfly.org]
+
+==== Maven
+
+Para compilar y empaquetar se utiliza http://maven.apache.org[Apache Maven].
+
+== Compilar
+
+Se debe compilar usando el siguiente comando:
+
+[source, bash]
+----
+$ mvn clean package
+----
+
+== Desplegar
+
+Se debe copiar el archivo `target/api.war` a la carpeta `standalone/deploy` de un servidor de aplicaciones WildFly
+
+== Colaborar
+
+Para colaborar se puede enviar un Merge Request utilizando la plataforma https://minka.gob.ec[Minka].
+
+== Versiones
+
+Usamos http://semver.org[SemVer] para versionar.
+
+== Autores
+
+* *Ricardo Arguello* - *Desarrollo* - http://www.soportelibre.com[Soporte Libre]
+* *Misael Fernández* - *Desarrollo* - misael.fernandez.correa@gmail.com
+
+== Licencia
+
+https://www.gnu.org/licenses/agpl-3.0.txt[GNU AFFERO GENERAL PUBLIC LICENSE, Version 3 (AGPL-3.0)]
