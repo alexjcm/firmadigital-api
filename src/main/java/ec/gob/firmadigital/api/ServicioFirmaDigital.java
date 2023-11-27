@@ -49,7 +49,7 @@ import jakarta.ws.rs.core.Response.Status;
 public class ServicioFirmaDigital {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "http://testws.firmadigital.gob.ec:8080/servicio/documentos";
+    private static final String REST_SERVICE_URL = "http://impws.firmadigital.gob.ec:8080/servicio/documentos";
 
     /**
      * Obterner un documento mediante una invocación REST

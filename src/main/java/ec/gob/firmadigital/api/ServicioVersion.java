@@ -42,7 +42,7 @@ import jakarta.ws.rs.core.MediaType;
 public class ServicioVersion {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "http://testws.firmadigital.gob.ec:8080/servicio/version";
+    private static final String REST_SERVICE_URL = "http://impws.firmadigital.gob.ec:8080/servicio/version";
 
     private static final Logger logger = Logger.getLogger(ServicioVersion.class.getName());
 
