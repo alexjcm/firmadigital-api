@@ -15,7 +15,6 @@
  */
 package ec.gob.firmadigital.api;
 
-import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
@@ -67,25 +66,21 @@ public class ServicioFirmaDigital {
         Invocation invocation = builder.buildGet();
 
         try {
-            String json = invocation.invoke(String.class);
-            return Response.ok(json).header("Content-Length", json.length()).build();
-        } catch (BadRequestException e) {
-            String mensaje = e.getResponse().readEntity(String.class);
-//            String mensaje;
-//            if (e.getResponse().hasEntity()) {
-//                mensaje = e.getResponse().readEntity(String.class);
-//            } else {
-//                mensaje = e.toString();
-//            }
-            return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity(mensaje).build();
+            Response response = invocation.invoke();
+            int statusCode = response.getStatus();
+            String jsonResponse = response.readEntity(String.class);
+            if (statusCode == 200) {
+                return Response.ok(jsonResponse).header("Content-Length", jsonResponse.length()).build();
+            } else {
+                return Response.status(Status.NOT_ACCEPTABLE).type(MediaType.TEXT_PLAIN).entity(jsonResponse).build();
+            }
         } catch (WebApplicationException e) {
-            String mensaje = e.getResponse().readEntity(String.class);
-//            String mensaje;
-//            if (e.getResponse().hasEntity()) {
-//                mensaje = e.getResponse().readEntity(String.class);
-//            } else {
-//                mensaje = e.toString();
-//            }
+            String mensaje;
+            if (e.getResponse().hasEntity()) {
+                mensaje = e.getResponse().readEntity(String.class);
+            } else {
+                mensaje = e.toString();
+            }
             return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
                     "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + mensaje)
                     .build();
@@ -120,13 +115,23 @@ public class ServicioFirmaDigital {
         Invocation invocation = builder.buildPut(Entity.form(form));
 
         try {
-            String jsonResponse = invocation.invoke(String.class);
-            return Response.ok(jsonResponse).header("Content-Length", jsonResponse.length()).build();
-        } catch (BadRequestException e) {
-            return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity(e.getResponse().readEntity(String.class)).build();
+            Response response = invocation.invoke();
+            int statusCode = response.getStatus();
+            String jsonResponse = response.readEntity(String.class);
+            if (statusCode == 200) {
+                return Response.ok(jsonResponse).header("Content-Length", jsonResponse.length()).build();
+            } else {
+                return Response.status(Status.NOT_ACCEPTABLE).type(MediaType.TEXT_PLAIN).entity(jsonResponse).build();
+            }
         } catch (WebApplicationException e) {
+            String mensaje;
+            if (e.getResponse().hasEntity()) {
+                mensaje = e.getResponse().readEntity(String.class);
+            } else {
+                mensaje = e.toString();
+            }
             return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
-                    "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + e.getResponse().readEntity(String.class))
+                    "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + mensaje)
                     .build();
         }
     }
