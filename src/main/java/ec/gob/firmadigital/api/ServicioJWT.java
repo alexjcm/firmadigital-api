@@ -1,5 +1,6 @@
 /*
  * Firma Digital: API
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,12 +16,10 @@
  */
 package ec.gob.firmadigital.api;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.HeaderParam;
+
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -32,56 +31,36 @@ import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 /**
- * Este servicio permite obtener la fecha y hora del servidor en formato
- * ISO-8601.
+ * Estándar JWT.
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * @author Misael Fernández
  */
-@Path("/fecha-hora")
-public class ServicioFechaHora {
+@Path("/getjwt")
+public class ServicioJWT {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://impws.firmadigital.gob.ec/servicio/version";
+    private static final String REST_SERVICE_URL = "https://impws.firmadigital.gob.ec/servicio/getjwt";
 
-    /**
-     * Retorna la fecha y hora del servidor, en formato ISO-8601.Por ejemplo:
-     * "2017-08-27T17:54:43.562-05:00"
-     *
-     * @param base64
-     * @return
-     */
+    private static final String API_KEY_HEADER_PARAMETER = "X-API-KEY";
+
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
-    public String getFechaHora(@FormParam("base64") String base64) {
+    public Response validarEndpoint(@HeaderParam(API_KEY_HEADER_PARAMETER) String apiKey, @FormParam("base64") String base64) {
         try {
-            String respuesta = buscarVersion(base64);
-            
-            String resultado;
-            try {
-                JsonObject jsonObject = new Gson().fromJson(respuesta, JsonObject.class);
-                resultado = jsonObject.get("resultado").getAsString();
-            } catch (NullPointerException | com.google.gson.JsonSyntaxException e) {
-                return null;
-            }
-
-            if (resultado.equals("Version enabled")) {
-                return ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            } else {
-                return null;
-            }
+            return Response.status(Response.Status.OK).entity(getJWT(apiKey, base64)).build();
         } catch (NotFoundException e) {
-            return null;
-//            return "No se encuentra el servidor de búsqueda";
+            return Response.status(Response.Status.BAD_REQUEST).entity("No se encuentra el servidor de búsqueda").build();
         }
     }
 
-    private String buscarVersion(String base64) throws NotFoundException {
+    private String getJWT(String apiKey, String base64) throws NotFoundException {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL);
-        Invocation.Builder builder = target.request();
+        Invocation.Builder builder = target.request().header(API_KEY_HEADER_PARAMETER, apiKey);
         Form form = new Form();
         form.param("base64", base64);
         Invocation invocation = builder.buildPost(Entity.form(form));

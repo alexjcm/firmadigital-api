@@ -16,7 +16,6 @@
  */
 package ec.gob.firmadigital.api;
 
-import java.util.logging.Logger;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 
@@ -42,9 +41,7 @@ import jakarta.ws.rs.core.MediaType;
 public class ServicioVersion {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/version";
-
-    private static final Logger logger = Logger.getLogger(ServicioVersion.class.getName());
+    private static final String REST_SERVICE_URL = "https://impws.firmadigital.gob.ec/servicio/version";
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

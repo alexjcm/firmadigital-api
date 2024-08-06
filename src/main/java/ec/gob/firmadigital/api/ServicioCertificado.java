@@ -35,7 +35,7 @@ import jakarta.ws.rs.core.MediaType;
 public class ServicioCertificado {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/certificado";
+    private static final String REST_SERVICE_URL = "https://impws.firmadigital.gob.ec/servicio/certificado";
 
     @GET
     @Path("/revocado/{serial}")

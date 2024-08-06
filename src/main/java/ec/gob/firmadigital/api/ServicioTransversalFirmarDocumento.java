@@ -1,5 +1,6 @@
 /*
  * Firma Digital: API
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,16 +16,12 @@
  */
 package ec.gob.firmadigital.api;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -34,55 +31,38 @@ import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.MediaType;
 
 /**
- * Este servicio permite obtener la fecha y hora del servidor en formato
- * ISO-8601.
+ * REST Web Service
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * @author Misael Fernández
  */
-@Path("/fecha-hora")
-public class ServicioFechaHora {
+@Path("/transversalfirmardocumento")
+public class ServicioTransversalFirmarDocumento {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://impws.firmadigital.gob.ec/servicio/version";
+    private static final String REST_SERVICE_URL = "http://wsmobile.firmadigital.gob.ec:8080/servicio/transversalfirmardocumento";
 
-    /**
-     * Retorna la fecha y hora del servidor, en formato ISO-8601.Por ejemplo:
-     * "2017-08-27T17:54:43.562-05:00"
-     *
-     * @param base64
-     * @return
-     */
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getFechaHora(@FormParam("base64") String base64) {
+    public String validarEndpointPost(@FormParam("jwt") String jwt, @FormParam("pkcs12") String pkcs12, @FormParam("password") String password,
+            @FormParam("documento") String documento, @FormParam("json") String json, @FormParam("base64") String base64) {
         try {
-            String respuesta = buscarVersion(base64);
-            
-            String resultado;
-            try {
-                JsonObject jsonObject = new Gson().fromJson(respuesta, JsonObject.class);
-                resultado = jsonObject.get("resultado").getAsString();
-            } catch (NullPointerException | com.google.gson.JsonSyntaxException e) {
-                return null;
-            }
-
-            if (resultado.equals("Version enabled")) {
-                return ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            } else {
-                return null;
-            }
+            return transversalfirmarDocumento(jwt, pkcs12, password, documento, json, base64);
         } catch (NotFoundException e) {
-            return null;
-//            return "No se encuentra el servidor de búsqueda";
+            return "No se encuentra el servidor de búsqueda";
         }
     }
 
-    private String buscarVersion(String base64) throws NotFoundException {
+    private String transversalfirmarDocumento(String jwt, String pkcs12, String password, String documento, String json, String base64) throws NotFoundException {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL);
         Invocation.Builder builder = target.request();
         Form form = new Form();
+        form.param("jwt", jwt);
+        form.param("pkcs12", pkcs12);
+        form.param("password", password);
+        form.param("documento", documento);
+        form.param("json", json);
         form.param("base64", base64);
         Invocation invocation = builder.buildPost(Entity.form(form));
         return invocation.invoke(String.class);
