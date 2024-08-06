@@ -39,6 +39,7 @@
         <tag>HEAD</tag>
     </scm>
 
+
     <properties>
         <jakartaee>10.0.0</jakartaee>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
