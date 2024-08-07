@@ -16,6 +16,7 @@
  */
 package ec.gob.firmadigital.api;
 
+import ec.gob.firmadigital.api.utils.UtilsJson;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.HeaderParam;
@@ -53,7 +54,11 @@ public class ServicioJWT {
         try {
             return Response.status(Response.Status.OK).entity(getJWT(apiKey, base64)).build();
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("No se encuentra el servidor de búsqueda").build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(
+                    UtilsJson.generarJsonResponse(
+                            Response.Status.BAD_REQUEST.getStatusCode(),
+                            "No se encuentra el servidor de búsqueda",
+                            null)).build();
         }
     }
 
