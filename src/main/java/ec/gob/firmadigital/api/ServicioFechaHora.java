@@ -43,7 +43,7 @@ import jakarta.ws.rs.core.MediaType;
 public class ServicioFechaHora {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://impws.firmadigital.gob.ec/servicio/version";
+    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/version";
 
     /**
      * Retorna la fecha y hora del servidor, en formato ISO-8601.Por ejemplo:

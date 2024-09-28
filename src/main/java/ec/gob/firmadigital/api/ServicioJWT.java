@@ -43,7 +43,7 @@ import jakarta.ws.rs.core.Response;
 public class ServicioJWT {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://impws.firmadigital.gob.ec/servicio/getjwt";
+    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/getjwt";
 
     private static final String API_KEY_HEADER_PARAMETER = "X-API-KEY";
 

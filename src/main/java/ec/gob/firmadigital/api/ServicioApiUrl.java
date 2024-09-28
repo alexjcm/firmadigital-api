@@ -37,7 +37,7 @@ import jakarta.ws.rs.core.MediaType;
 public class ServicioApiUrl {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://impws.firmadigital.gob.ec/servicio/apiurl";
+    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/apiurl";
 
     private static final Logger logger = Logger.getLogger(ServicioApiUrl.class.getName());
 
