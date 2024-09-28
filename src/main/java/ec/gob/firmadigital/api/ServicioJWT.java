@@ -16,8 +16,10 @@
  */
 package ec.gob.firmadigital.api;
 
+import ec.gob.firmadigital.api.utils.UtilsJson;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.HeaderParam;
 
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
@@ -30,34 +32,40 @@ import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 /**
- * Permite validar la versión permitido.
+ * Estándar JWT.
  *
- * @author Christian Espinosa <christian.espinosa@mintel.gob.ec>, Misael
- * Fernández
+ * @author Misael Fernández
  */
-@Path("/version")
-public class ServicioVersion {
+@Path("/getjwt")
+public class ServicioJWT {
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/version";
+    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/getjwt";
+
+    private static final String API_KEY_HEADER_PARAMETER = "X-API-KEY";
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
-    public String validarEndpoint(@FormParam("base64") String base64) {
+    public Response validarEndpoint(@HeaderParam(API_KEY_HEADER_PARAMETER) String apiKey, @FormParam("base64") String base64) {
         try {
-            return buscarVersion(base64);
+            return Response.status(Response.Status.OK).entity(getJWT(apiKey, base64)).build();
         } catch (NotFoundException e) {
-            return "No se encuentra el servidor de búsqueda";
+            return Response.status(Response.Status.BAD_REQUEST).entity(
+                    UtilsJson.generarJsonResponse(
+                            Response.Status.BAD_REQUEST.getStatusCode(),
+                            "No se encuentra el servidor de búsqueda",
+                            null)).build();
         }
     }
 
-    private String buscarVersion(String base64) throws NotFoundException {
+    private String getJWT(String apiKey, String base64) throws NotFoundException {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL);
-        Invocation.Builder builder = target.request();
+        Invocation.Builder builder = target.request().header(API_KEY_HEADER_PARAMETER, apiKey);
         Form form = new Form();
         form.param("base64", base64);
         Invocation invocation = builder.buildPost(Entity.form(form));
