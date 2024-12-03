@@ -58,7 +58,7 @@ public class ServicioFechaHora {
     public String getFechaHora(@FormParam("base64") String base64) {
         try {
             String respuesta = buscarVersion(base64);
-            
+
             String resultado;
             try {
                 JsonObject jsonObject = new Gson().fromJson(respuesta, JsonObject.class);

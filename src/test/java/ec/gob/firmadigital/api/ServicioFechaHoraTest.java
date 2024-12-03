@@ -21,6 +21,7 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.Test;
@@ -32,18 +33,18 @@ import org.junit.Test;
  */
 public class ServicioFechaHoraTest {
 
-    private static final Logger logger = Logger.getLogger(ServicioFechaHoraTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ServicioFechaHoraTest.class.getName());
 
     @Test
     public void testFechaHora() throws Exception {
-//        ServicioFechaHora servicioFechaHora = new ServicioFechaHora();
-//        String fechaHora = servicioFechaHora.getFechaHora("");
-//        logger.info("fechaHora=" + fechaHora);
-//
-//        DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-//        TemporalAccessor accessor = timeFormatter.parse(fechaHora);
-//        Date date = Date.from(Instant.from(accessor));
-//        logger.info("date=" + date);
-//        assertNotNull(date);
+        ServicioFechaHora servicioFechaHora = new ServicioFechaHora();
+        String fechaHora = servicioFechaHora.getFechaHora("");
+        LOGGER.log(Level.INFO, "fechaHora={0}", fechaHora);
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+        TemporalAccessor accessor = timeFormatter.parse(fechaHora);
+        Date date = Date.from(Instant.from(accessor));
+        LOGGER.log(Level.INFO, "date={0}", date);
+        assertNotNull(date);
     }
 }

@@ -27,6 +27,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
+import java.util.logging.Level;
 
 /**
  * Permite validar la si un API URL es permitido.
@@ -39,13 +40,13 @@ public class ServicioApiUrl {
     // Servicio REST interno
     private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/apiurl";
 
-    private static final Logger logger = Logger.getLogger(ServicioApiUrl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ServicioApiUrl.class.getName());
 
     @GET
     @Path("{base64}")
     @Produces(MediaType.TEXT_PLAIN)
     public String validarEndpoint(@PathParam("base64") String base64) {
-        logger.info("base64=" + base64);
+        LOGGER.log(Level.INFO, "base64={0}", base64);
         try {
             return buscarUrl(base64);
         } catch (NotFoundException e) {
