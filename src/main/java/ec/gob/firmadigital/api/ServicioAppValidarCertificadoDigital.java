@@ -37,27 +37,35 @@ import jakarta.ws.rs.core.MediaType;
  * Fernández
  */
 @Path("/appvalidarcertificadodigital")
-public class ServicioAppValidarCertificadoDigital {
+public class ServicioAppValidarCertificadoDigital extends RequestSizeFilter {
+
+    /**
+     * Nombre de la propiedad de sistema que contiene el servicio web
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio-mobile.url";
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "http://wsmobile.firmadigital.gob.ec:8080/servicio/appvalidarcertificadodigital";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/appvalidarcertificadodigital";
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String validarEndpointPost(@FormParam("pkcs12") String pkcs12, @FormParam("password") String password, @FormParam("base64") String base64) {
+    public String validarEndpointPost(@FormParam("jwt") String jwt, 
+            @FormParam("pkcs12") String pkcs12, @FormParam("password") String password, 
+            @FormParam("base64") String base64) {
         try {
-            return appValidarCertificadoDigital(pkcs12, password, base64);
+            return appValidarCertificadoDigital(jwt, pkcs12, password, base64);
         } catch (NotFoundException e) {
             return "No se encuentra el servidor de búsqueda";
         }
     }
 
-    private String appValidarCertificadoDigital(String pkcs12, String password, String base64) throws NotFoundException {
+    private String appValidarCertificadoDigital(String jwt, String pkcs12, String password, String base64) throws NotFoundException {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL);
         Invocation.Builder builder = target.request();
         Form form = new Form();
+        form.param("jwt", jwt);
         form.param("pkcs12", pkcs12);
         form.param("password", password);
         form.param("base64", base64);

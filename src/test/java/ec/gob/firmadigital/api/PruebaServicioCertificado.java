@@ -51,7 +51,7 @@ public class PruebaServicioCertificado {
         try (InputStream is = urlConnection.getInputStream()) {
             InputStreamReader reader = new InputStreamReader(is);
             BufferedReader in = new BufferedReader(reader);
-            return Boolean.valueOf(in.readLine());
+            return Boolean.parseBoolean(in.readLine());
         }
     }
 

@@ -45,10 +45,15 @@ import jakarta.ws.rs.core.Response.Status;
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
  */
 @Path("/firmadigital")
-public class ServicioFirmaDigital {
+public class ServicioFirmaDigital{
+
+    /**
+     * Nombre de la propiedad de sistema que contiene el servicio web
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/documentos";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/documentos";
 
     /**
      * Obterner un documento mediante una invocación REST

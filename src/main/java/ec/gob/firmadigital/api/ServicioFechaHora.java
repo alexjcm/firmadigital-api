@@ -42,8 +42,13 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/fecha-hora")
 public class ServicioFechaHora {
 
+    /**
+     * Nombre de la propiedad de sistema que contiene el servicio web
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/version";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/version";
 
     /**
      * Retorna la fecha y hora del servidor, en formato ISO-8601.Por ejemplo:

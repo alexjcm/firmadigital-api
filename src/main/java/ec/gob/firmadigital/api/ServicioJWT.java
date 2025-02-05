@@ -42,8 +42,13 @@ import jakarta.ws.rs.core.Response;
 @Path("/getjwt")
 public class ServicioJWT {
 
+    /**
+     * Nombre de la propiedad de sistema que contiene el servicio web
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/getjwt";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/getjwt";
 
     private static final String API_KEY_HEADER_PARAMETER = "X-API-KEY";
 

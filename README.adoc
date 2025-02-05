@@ -50,10 +50,6 @@ $ sudo apt-get install maven
 
 Se utilizó como entorno de desarrollo el IDE http://netbeans.org[Netbeans].
 
-=== WildFly
-
-Se utilizó el servidor de aplicación https://www.wildfly.org/downloads/[Wildfly].
-
 == Compilar
 
 Se debe compilar usando el siguiente comando:
@@ -63,9 +59,22 @@ Se debe compilar usando el siguiente comando:
 $ mvn clean package
 ----
 
+=== WildFly
+
+Se utilizó el servidor de aplicación https://www.wildfly.org/downloads/[Wildfly].
+
+== Configuración de variables globales
+
+Se establece el subdominio donde se publica el proyecto _firmadigital-servicio_, se deben configurar las variables globales desde el servidor de aplicación:
+
+[source, bash]
+----
+        <property name="firmadigital-servicio.url" value="https://impws.firmadigital.gob.ec/servicio"/>
+----
+
 == Desplegar
 
-Para desplegar el proyecto _firmadigital-api_, se debe utilizar el servidor de aplicación Wildfly en la versión 29.
+Para desplegar el proyecto _firmadigital-api_, se debe utilizar el servidor de aplicación Wildfly desde la versión 29 (cambio de jee8 a jakarta 10).
 
 Se debe copiar el archivo `target/api.war` a la carpeta `standalone/deploy` de un servidor de aplicaciones WildFly
 
@@ -81,7 +90,7 @@ Usamos https://minka.gob.ec/mintel/ge/estandares/-/blob/master/versionamiento.md
 
 * *Ricardo Arguello* - *Desarrollo* - http://www.soportelibre.com[Soporte Libre]
 * *Misael Fernández* - *Desarrollo* - misael.fernandez.correa@gmail.com
-* *Diana Pujol* - deeperdigitalec@outlook.es[Deeper]
+* *Diana Pujol* - *Deeper* - deeperdigitalec@outlook.es
 
 == Licencia
 

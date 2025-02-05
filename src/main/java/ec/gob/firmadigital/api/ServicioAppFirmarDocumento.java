@@ -37,28 +37,36 @@ import jakarta.ws.rs.core.MediaType;
  * Fernández
  */
 @Path("/appfirmardocumento")
-public class ServicioAppFirmarDocumento {
+public class ServicioAppFirmarDocumento extends RequestSizeFilter {
 
+    /**
+     * Nombre de la propiedad de sistema que contiene el servicio web
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio-mobile.url";
+    
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "http://wsmobile.firmadigital.gob.ec:8080/servicio/appfirmardocumento";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/appfirmardocumento";
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String validarEndpointPost(@FormParam("pkcs12") String pkcs12, @FormParam("password") String password,
-            @FormParam("documento") String documento, @FormParam("json") String json, @FormParam("base64") String base64) {
+    public String validarEndpointPost(@FormParam("jwt") String jwt, 
+            @FormParam("pkcs12") String pkcs12, @FormParam("password") String password,
+            @FormParam("documento") String documento, @FormParam("json") String json, 
+            @FormParam("base64") String base64) {
         try {
-            return firmarDocumento(pkcs12, password, documento, json, base64);
+            return firmarDocumento(jwt, pkcs12, password, documento, json, base64);
         } catch (NotFoundException e) {
             return "No se encuentra el servidor de búsqueda";
         }
     }
 
-    private String firmarDocumento(String pkcs12, String password, String documento, String json, String base64) throws NotFoundException {
+    private String firmarDocumento(String jwt, String pkcs12, String password, String documento, String json, String base64) throws NotFoundException {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL);
         Invocation.Builder builder = target.request();
         Form form = new Form();
+        form.param("jwt", jwt);
         form.param("pkcs12", pkcs12);
         form.param("password", password);
         form.param("documento", documento);
