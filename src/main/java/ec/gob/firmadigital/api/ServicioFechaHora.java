@@ -43,7 +43,8 @@ import jakarta.ws.rs.core.MediaType;
 public class ServicioFechaHora {
 
     /**
-     * Nombre de la propiedad de sistema que contiene el servicio web
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
      */
     private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
 

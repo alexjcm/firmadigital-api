@@ -45,10 +45,11 @@ import jakarta.ws.rs.core.Response.Status;
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
  */
 @Path("/firmadigital")
-public class ServicioFirmaDigital{
+public class ServicioFirmaDigital {
 
     /**
-     * Nombre de la propiedad de sistema que contiene el servicio web
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
      */
     private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
 

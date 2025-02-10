@@ -40,19 +40,20 @@ import jakarta.ws.rs.core.MediaType;
 public class ServicioAppFirmarDocumento extends RequestSizeFilter {
 
     /**
-     * Nombre de la propiedad de sistema que contiene el servicio web
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
      */
     private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio-mobile.url";
-    
+
     // Servicio REST interno
     private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/appfirmardocumento";
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String validarEndpointPost(@FormParam("jwt") String jwt, 
+    public String validarEndpointPost(@FormParam("jwt") String jwt,
             @FormParam("pkcs12") String pkcs12, @FormParam("password") String password,
-            @FormParam("documento") String documento, @FormParam("json") String json, 
+            @FormParam("documento") String documento, @FormParam("json") String json,
             @FormParam("base64") String base64) {
         try {
             return firmarDocumento(jwt, pkcs12, password, documento, json, base64);

@@ -40,7 +40,8 @@ import jakarta.ws.rs.core.MediaType;
 public class ServicioAppValidarCertificadoDigital extends RequestSizeFilter {
 
     /**
-     * Nombre de la propiedad de sistema que contiene el servicio web
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
      */
     private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio-mobile.url";
 
@@ -50,8 +51,8 @@ public class ServicioAppValidarCertificadoDigital extends RequestSizeFilter {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String validarEndpointPost(@FormParam("jwt") String jwt, 
-            @FormParam("pkcs12") String pkcs12, @FormParam("password") String password, 
+    public String validarEndpointPost(@FormParam("jwt") String jwt,
+            @FormParam("pkcs12") String pkcs12, @FormParam("password") String password,
             @FormParam("base64") String base64) {
         try {
             return appValidarCertificadoDigital(jwt, pkcs12, password, base64);
