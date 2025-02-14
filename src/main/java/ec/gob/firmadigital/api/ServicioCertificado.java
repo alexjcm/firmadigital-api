@@ -29,7 +29,7 @@ import jakarta.ws.rs.core.MediaType;
 /**
  * Este servicio permite verificar si un certificado está revocado.
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * @author Ricardo Arguello
  */
 @Path("/certificado")
 public class ServicioCertificado {

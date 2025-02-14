@@ -34,8 +34,7 @@ import jakarta.ws.rs.core.MediaType;
 /**
  * REST Web Service
  *
- * @author Christian Espinosa <christian.espinosa@mintel.gob.ec>, Misael
- * Fernández
+ * @author Christian Espinosa, Misael Fernández
  */
 @Path("/appverificardocumento")
 public class ServicioAppVerificarDocumento extends RequestSizeFilter {

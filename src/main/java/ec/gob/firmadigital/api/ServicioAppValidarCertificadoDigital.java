@@ -33,8 +33,7 @@ import jakarta.ws.rs.core.MediaType;
 /**
  * REST Web Service
  *
- * @author Christian Espinosa <christian.espinosa@mintel.gob.ec>, Misael
- * Fernández
+ * @author Christian Espinosa, Misael Fernández
  */
 @Path("/appvalidarcertificadodigital")
 public class ServicioAppValidarCertificadoDigital extends RequestSizeFilter {

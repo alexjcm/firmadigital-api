@@ -37,7 +37,7 @@ import jakarta.ws.rs.core.MediaType;
  * Este servicio permite obtener la fecha y hora del servidor en formato
  * ISO-8601.
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * @author Ricardo Arguello
  */
 @Path("/fecha-hora")
 public class ServicioFechaHora {

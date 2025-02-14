@@ -32,7 +32,7 @@ import java.util.logging.Level;
 /**
  * Permite validar la si un API URL es permitido.
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * @author Ricardo Arguello
  */
 @Path("/url")
 public class ServicioApiUrl {

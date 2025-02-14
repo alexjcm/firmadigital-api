@@ -18,7 +18,6 @@ package ec.gob.firmadigital.api;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
-
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -34,8 +33,7 @@ import jakarta.ws.rs.core.MediaType;
 /**
  * Permite validar la versión permitido.
  *
- * @author Christian Espinosa <christian.espinosa@mintel.gob.ec>, Misael
- * Fernández
+ * @author Christian Espinosa, Misael Fernández
  */
 @Path("/version")
 public class ServicioVersion {
