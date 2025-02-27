@@ -30,6 +30,7 @@ import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.client.exception.ResteasyClientErrorException;
 
 /**
  * REST Web Service
@@ -57,9 +58,10 @@ public class ServicioAppVerificarDocumento extends RequestSizeFilter {
             return verificarDocumento(jwt, documento, base64);
         } catch (NotFoundException e) {
             return "No se encuentra el servidor de búsqueda";
+        } catch (ResteasyClientErrorException e) {
+            return e.getMessage();
         } catch (WebApplicationException e) {
             String mensaje;
-            System.out.println("e: " + e.getMessage());
             if (e.getResponse().hasEntity()) {
                 mensaje = e.getResponse().readEntity(String.class);
             } else {

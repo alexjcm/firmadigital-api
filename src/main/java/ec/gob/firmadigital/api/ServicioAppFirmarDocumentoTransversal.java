@@ -22,6 +22,7 @@ import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -29,6 +30,7 @@ import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.client.exception.ResteasyClientErrorException;
 
 /**
  * REST Web Service
@@ -57,6 +59,17 @@ public class ServicioAppFirmarDocumentoTransversal extends RequestSizeFilter {
             return firmarTransversal(jwt, pkcs12, password, json, base64);
         } catch (NotFoundException e) {
             return "No se encuentra el servidor de búsqueda";
+        } catch (ResteasyClientErrorException e) {
+            return e.getMessage();
+        } catch (WebApplicationException e) {
+            String mensaje;
+            System.out.println("WebApplicationException: " + e.getMessage());
+            if (e.getResponse().hasEntity()) {
+                mensaje = e.getResponse().readEntity(String.class);
+            } else {
+                mensaje = e.toString();
+            }
+            return mensaje;
         }
     }
 
