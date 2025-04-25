@@ -74,7 +74,7 @@ Se establece el subdominio donde se publica el proyecto _firmadigital-servicio_,
 
 == Desplegar
 
-Para desplegar el proyecto _firmadigital-api_, se debe utilizar el servidor de aplicación Wildfly desde la versión 29 (cambio de jee8 a jakarta 10).
+Para desplegar el proyecto _firmadigital-api_, se debe utilizar el servidor de aplicación Wildfly desde la versión 35.
 
 Se debe copiar el archivo `target/api.war` a la carpeta `standalone/deploy` de un servidor de aplicaciones WildFly
 
