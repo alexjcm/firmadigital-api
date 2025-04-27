@@ -42,13 +42,19 @@ import jakarta.ws.rs.core.Response.Status;
  * Este mecanismo permite invocar los servicios internos desde un cliente
  * externo.
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * @author Ricardo Arguello
  */
 @Path("/firmadigital")
 public class ServicioFirmaDigital {
 
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/documentos";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/documentos";
 
     /**
      * Obterner un documento mediante una invocación REST
@@ -64,7 +70,6 @@ public class ServicioFirmaDigital {
         WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
         Builder builder = target.request(MediaType.APPLICATION_JSON);
         Invocation invocation = builder.buildGet();
-
         try {
             Response response = invocation.invoke();
             int statusCode = response.getStatus();
@@ -105,7 +110,6 @@ public class ServicioFirmaDigital {
         if (base64 == null) {
             return Response.status(Status.BAD_REQUEST).entity("Se debe incluir base64").build();
         }
-
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
         Builder builder = target.request();
@@ -113,7 +117,6 @@ public class ServicioFirmaDigital {
         form.param("json", json);
         form.param("base64", base64);
         Invocation invocation = builder.buildPut(Entity.form(form));
-
         try {
             Response response = invocation.invoke();
             int statusCode = response.getStatus();

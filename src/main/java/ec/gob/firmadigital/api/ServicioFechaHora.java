@@ -37,13 +37,19 @@ import jakarta.ws.rs.core.MediaType;
  * Este servicio permite obtener la fecha y hora del servidor en formato
  * ISO-8601.
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * @author Ricardo Arguello
  */
 @Path("/fecha-hora")
 public class ServicioFechaHora {
 
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/version";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/version";
 
     /**
      * Retorna la fecha y hora del servidor, en formato ISO-8601.Por ejemplo:
@@ -58,7 +64,7 @@ public class ServicioFechaHora {
     public String getFechaHora(@FormParam("base64") String base64) {
         try {
             String respuesta = buscarVersion(base64);
-            
+
             String resultado;
             try {
                 JsonObject jsonObject = new Gson().fromJson(respuesta, JsonObject.class);

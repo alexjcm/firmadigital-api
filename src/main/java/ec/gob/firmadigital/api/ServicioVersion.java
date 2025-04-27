@@ -18,7 +18,6 @@ package ec.gob.firmadigital.api;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
-
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -34,14 +33,19 @@ import jakarta.ws.rs.core.MediaType;
 /**
  * Permite validar la versión permitido.
  *
- * @author Christian Espinosa <christian.espinosa@mintel.gob.ec>, Misael
- * Fernández
+ * @author Christian Espinosa, Misael Fernández
  */
 @Path("/version")
 public class ServicioVersion {
 
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = "https://ws.firmadigital.gob.ec/servicio/version";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/version";
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
