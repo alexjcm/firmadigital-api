@@ -21,20 +21,23 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Esta clase permite probar el servicio REST que verifica un certificado digital mediante el CRL
- * almacenado en la base de datos del servicio.
+ * Esta clase permite probar el servicio REST que verifica un certificado
+ * digital mediante el CRL almacenado en la base de datos del servicio.
  *
  * @author Ricardo Arguello
  */
 public class PruebaServicioCertificado {
 
-    private static final String CERTIFICADO_URL = "http://localhost:7776/api/certificado/revocado";
+    private static final String CERTIFICADO_URL = "https://api.firmadigital.gob.ec/api/certificado/revocado";
+//    private static final String CERTIFICADO_URL = "https://impapi.firmadigital.gob.ec:8080/api/certificado/revocado";
+//    private static final String CERTIFICADO_URL = "http://localhost:8080/api/certificado/revocado";
+    // private static final String CERTIFICADO_URL = "http://localhost:7776/api/certificado/revocado";
 
-    private static final Logger logger = Logger.getLogger(
-        PruebaServicioCertificado.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PruebaServicioCertificado.class.getName());
 
     public boolean verificarCrlServidor(int serial) throws IOException {
         URL url = new URL(CERTIFICADO_URL + "/" + serial);
@@ -42,14 +45,14 @@ public class PruebaServicioCertificado {
         int responseCode = urlConnection.getResponseCode();
 
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            logger.severe(CERTIFICADO_URL + " Response Code: " + responseCode);
+            LOGGER.log(Level.SEVERE,CERTIFICADO_URL + " Response Code: {0}", responseCode);
             return false;
         }
 
         try (InputStream is = urlConnection.getInputStream()) {
             InputStreamReader reader = new InputStreamReader(is);
             BufferedReader in = new BufferedReader(reader);
-            return Boolean.valueOf(in.readLine());
+            return Boolean.parseBoolean(in.readLine());
         }
     }
 
@@ -61,10 +64,10 @@ public class PruebaServicioCertificado {
         // Este certificado si es valido
         serial = 1312818414;
         valido = main.verificarCrlServidor(serial);
-        logger.info("certificado " + serial + " revocado? " + valido);
+        LOGGER.log(Level.INFO, "certificado {0} revocado? {1}", new Object[]{serial, valido});
 
         serial = 1234567;
         valido = main.verificarCrlServidor(serial);
-        logger.info("certificado " + serial + " revocado? " + valido);
+        LOGGER.log(Level.INFO, "certificado {0} revocado? {1}", new Object[]{serial, valido});
     }
 }

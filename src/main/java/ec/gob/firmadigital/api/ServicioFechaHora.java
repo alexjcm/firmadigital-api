@@ -40,13 +40,10 @@ import jakarta.ws.rs.core.MediaType;
  * Este servicio permite obtener la fecha y hora del servidor en formato
  * ISO-8601.
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * @author Ricardo Arguello
  */
 @Path("/fecha-hora")
 public class ServicioFechaHora {
-
-    // Servicio REST interno
-    private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/version";
 
     /**
      * Retorna la fecha y hora del servidor, en formato ISO-8601. Por ejemplo:
@@ -54,6 +51,22 @@ public class ServicioFechaHora {
      *
      * @param base64
      * @return Hora y fecha actual
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
+    // Servicio REST interno
+    private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/version";
+    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/version";
+
+    /**
+     * Retorna la fecha y hora del servidor, en formato ISO-8601.Por ejemplo:
+     * "2017-08-27T17:54:43.562-05:00"
+     *
+     * @param base64
+     * @return
      */
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

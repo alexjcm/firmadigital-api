@@ -32,13 +32,20 @@ import jakarta.ws.rs.core.MediaType;
 /**
  * Este servicio permite verificar si un certificado está revocado.
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * @author Ricardo Arguello
  */
 @Path("/certificado")
 public class ServicioCertificado {
 
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
     // Servicio REST interno
     private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/certificado";
+    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/certificado";
 
     @GET
     @Path("/revocado/{serial}")

@@ -25,6 +25,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -32,35 +33,54 @@ import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.client.exception.ResteasyClientErrorException;
 
 /**
  * REST Web Service
  *
- * @author Christian Espinosa <christian.espinosa@mintel.gob.ec>, Misael
- * Fernández
+ * @author Christian Espinosa, Misael Fernández
  */
 @Path("/appverificardocumento")
-public class ServicioAppVerificarDocumento {
+public class ServicioAppVerificarDocumento extends RequestSizeFilter {
+
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio-mobile.url";
 
     // Servicio REST interno
     private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/appverificardocumento";
+    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/appverificardocumento";
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String verificarEndpointPost(@FormParam("documento") String documento, @FormParam("base64") String base64) {
+    public String verificarEndpointPost(@FormParam("jwt") String jwt,
+            @FormParam("documento") String documento, @FormParam("base64") String base64) {
         try {
-            return verificarDocumento(documento, base64);
+            return verificarDocumento(jwt, documento, base64);
         } catch (NotFoundException e) {
             return "No se encuentra el servidor de búsqueda";
+        } catch (ResteasyClientErrorException e) {
+            return e.getMessage();
+        } catch (WebApplicationException e) {
+            String mensaje;
+            if (e.getResponse().hasEntity()) {
+                mensaje = e.getResponse().readEntity(String.class);
+            } else {
+                mensaje = e.toString();
+            }
+            return mensaje;
         }
     }
 
-    private String verificarDocumento(String documento, String base64) throws NotFoundException {
+    private String verificarDocumento(String jwt, String documento, String base64) throws NotFoundException {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL);
         Invocation.Builder builder = target.request();
         Form form = new Form();
+        form.param("jwt", jwt);
         form.param("documento", documento);
         form.param("base64", base64);
         Invocation invocation = builder.buildPost(Entity.form(form));

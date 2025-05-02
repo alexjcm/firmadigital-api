@@ -1,10 +1,9 @@
-= Firma Digital: API
+= FirmaEC: firmadigital-api
 
 image:https://github.com/alexjcm/firmadigital-api/actions/workflows/main.yml/badge.svg["Build and testing", link="https://github.com/alexjcm/firmadigital-api/actions/workflows/main.yml"]
 image:https://img.shields.io/badge/License-AGPL%20v3-blue.svg[License: AGPL v3, link=https://www.gnu.org/licenses/agpl-3.0] 
 
-_Firma Digital API_ es un proyecto que implementa los servicios web REST (firmadigital-servicio)
-para la aplicación FirmaEC.
+Este proyecto implementa los servicios web REST (firmadigital-servicio) para la aplicación de FirmaEC.
 
 == Introducción
 
@@ -12,9 +11,9 @@ Los siguientes pasos le permitirán obtener una copia del proyecto para correrla
 
 === Pre-requisitos
 
-- JDK 11.- Para compilar y ejecutar la aplicación.
+- JDK 17.- Para compilar y ejecutar la aplicación.
 
-- WildFly 33.- Para desplegar la aplicación se necesita un servidor de aplicaciones *Jakarta EE 10*
+- WildFly 35.- Para desplegar la aplicación se necesita un servidor de aplicaciones
 disponible en http://www.wildfly.org[wildfly.org]
 
 - Maven 3.- Para compilar y empaquetar se utiliza http://maven.apache.org[Apache Maven].
@@ -25,6 +24,15 @@ Para compilar:
 
 ----
 mvn clean package
+----
+
+== Configuración de variables globales
+
+Se establece el subdominio donde se publica el proyecto _firmadigital-servicio_, se deben configurar las variables globales desde el servidor de aplicación:
+
+[source, bash]
+----
+        <property name="firmadigital-servicio.url" value="https://impws.firmadigital.gob.ec/servicio"/>
 ----
 
 == Cómo desplegar

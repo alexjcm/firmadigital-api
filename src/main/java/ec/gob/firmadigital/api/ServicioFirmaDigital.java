@@ -39,16 +39,26 @@ import jakarta.ws.rs.core.Response.Status;
 
 /**
  * Servicio REST para utilizar desde la aplicación del lado del cliente.
- * Es a su vez un cliente REST para invocar servicios provistos
- * Este mecanismo permite invocar los servicios internos desde un cliente externo.
  *
- * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+ * Es a su vez un cliente REST para invocar servicios provistos
+ *
+ * Este mecanismo permite invocar los servicios internos desde un cliente
+ * externo.
+ *
+ * @author Ricardo Arguello
  */
 @Path("/firmadigital")
 public class ServicioFirmaDigital {
 
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
     // Servicio REST interno
     private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/documentos";
+    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/documentos";
 
     /**
      * Obterner un documento mediante una invocación REST
@@ -64,7 +74,6 @@ public class ServicioFirmaDigital {
         WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
         Builder builder = target.request(MediaType.APPLICATION_JSON);
         Invocation invocation = builder.buildGet();
-
         try {
             Response response = invocation.invoke();
             int statusCode = response.getStatus();
@@ -83,7 +92,7 @@ public class ServicioFirmaDigital {
             }
             return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
                     "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + mensaje)
-                .build();
+                    .build();
         }
     }
 
@@ -105,7 +114,6 @@ public class ServicioFirmaDigital {
         if (base64 == null) {
             return Response.status(Status.BAD_REQUEST).entity("Se debe incluir base64").build();
         }
-
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
         Builder builder = target.request();
@@ -113,7 +121,6 @@ public class ServicioFirmaDigital {
         form.param("json", json);
         form.param("base64", base64);
         Invocation invocation = builder.buildPut(Entity.form(form));
-
         try {
             Response response = invocation.invoke();
             int statusCode = response.getStatus();
@@ -132,7 +139,7 @@ public class ServicioFirmaDigital {
             }
             return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
                     "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + mensaje)
-                .build();
+                    .build();
         }
     }
 }

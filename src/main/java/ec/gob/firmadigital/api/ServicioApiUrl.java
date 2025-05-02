@@ -31,6 +31,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
+import java.util.logging.Level;
 
 /**
  * Permite validar la si un API URL es permitido.
@@ -40,16 +41,22 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/url")
 public class ServicioApiUrl {
 
+    private static final Logger logger = Logger.getLogger(ServicioApiUrl.class.getName());
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
     // Servicio REST interno
     private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/apiurl";
-
-    private static final Logger logger = Logger.getLogger(ServicioApiUrl.class.getName());
+    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/apiurl";
 
     @GET
     @Path("{base64}")
     @Produces(MediaType.TEXT_PLAIN)
     public String validarEndpoint(@PathParam("base64") String base64) {
-        logger.info("base64=" + base64);
+        LOGGER.log(Level.INFO, "base64={0}", base64);
         try {
             return buscarUrl(base64);
         } catch (NotFoundException e) {

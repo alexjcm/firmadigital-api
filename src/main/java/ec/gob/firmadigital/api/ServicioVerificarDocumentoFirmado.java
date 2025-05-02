@@ -28,7 +28,7 @@ import jakarta.ws.rs.core.MediaType;
 /**
  * REST Web Service
  *
- * @author Christian Espinosa <christian.espinosa@mintel.gob.ec>
+ * @author Christian Espinosa, Misael Fernández
  */
 @Path("verificardocumentofirmado")
 public class ServicioVerificarDocumentoFirmado {
