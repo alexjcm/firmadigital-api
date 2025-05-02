@@ -3,4 +3,7 @@
 .settings
 nb-configuration.xml
 target
+<<<<<<< HEAD
 .idea
+=======
+>>>>>>> gitlab/master

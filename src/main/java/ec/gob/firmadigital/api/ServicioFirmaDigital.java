@@ -15,9 +15,12 @@
  */
 package ec.gob.firmadigital.api;
 
+<<<<<<< HEAD
 import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
 import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
 
+=======
+>>>>>>> gitlab/master
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
@@ -39,16 +42,37 @@ import jakarta.ws.rs.core.Response.Status;
 
 /**
  * Servicio REST para utilizar desde la aplicación del lado del cliente.
+<<<<<<< HEAD
  * Es a su vez un cliente REST para invocar servicios provistos
  * Este mecanismo permite invocar los servicios internos desde un cliente externo.
  *
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+=======
+ *
+ * Es a su vez un cliente REST para invocar servicios provistos
+ *
+ * Este mecanismo permite invocar los servicios internos desde un cliente
+ * externo.
+ *
+ * @author Ricardo Arguello
+>>>>>>> gitlab/master
  */
 @Path("/firmadigital")
 public class ServicioFirmaDigital {
 
+<<<<<<< HEAD
     // Servicio REST interno
     private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/documentos";
+=======
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
+    // Servicio REST interno
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/documentos";
+>>>>>>> gitlab/master
 
     /**
      * Obterner un documento mediante una invocación REST
@@ -64,7 +88,10 @@ public class ServicioFirmaDigital {
         WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
         Builder builder = target.request(MediaType.APPLICATION_JSON);
         Invocation invocation = builder.buildGet();
+<<<<<<< HEAD
 
+=======
+>>>>>>> gitlab/master
         try {
             Response response = invocation.invoke();
             int statusCode = response.getStatus();
@@ -83,7 +110,11 @@ public class ServicioFirmaDigital {
             }
             return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
                     "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + mensaje)
+<<<<<<< HEAD
                 .build();
+=======
+                    .build();
+>>>>>>> gitlab/master
         }
     }
 
@@ -105,7 +136,10 @@ public class ServicioFirmaDigital {
         if (base64 == null) {
             return Response.status(Status.BAD_REQUEST).entity("Se debe incluir base64").build();
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> gitlab/master
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL).path("{token}").resolveTemplate("token", token);
         Builder builder = target.request();
@@ -113,7 +147,10 @@ public class ServicioFirmaDigital {
         form.param("json", json);
         form.param("base64", base64);
         Invocation invocation = builder.buildPut(Entity.form(form));
+<<<<<<< HEAD
 
+=======
+>>>>>>> gitlab/master
         try {
             Response response = invocation.invoke();
             int statusCode = response.getStatus();
@@ -132,7 +169,11 @@ public class ServicioFirmaDigital {
             }
             return Response.status(Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity(
                     "Error al invocar servicio de obtencion de documentos en firmadigital-servicio: " + mensaje)
+<<<<<<< HEAD
                 .build();
+=======
+                    .build();
+>>>>>>> gitlab/master
         }
     }
 }

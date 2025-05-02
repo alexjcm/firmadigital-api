@@ -15,9 +15,12 @@
  */
 package ec.gob.firmadigital.api;
 
+<<<<<<< HEAD
 import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
 import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
 
+=======
+>>>>>>> gitlab/master
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.time.ZonedDateTime;
@@ -40,11 +43,16 @@ import jakarta.ws.rs.core.MediaType;
  * Este servicio permite obtener la fecha y hora del servidor en formato
  * ISO-8601.
  *
+<<<<<<< HEAD
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+=======
+ * @author Ricardo Arguello
+>>>>>>> gitlab/master
  */
 @Path("/fecha-hora")
 public class ServicioFechaHora {
 
+<<<<<<< HEAD
     // Servicio REST interno
     private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/version";
 
@@ -54,6 +62,23 @@ public class ServicioFechaHora {
      *
      * @param base64
      * @return Hora y fecha actual
+=======
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
+    // Servicio REST interno
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/version";
+
+    /**
+     * Retorna la fecha y hora del servidor, en formato ISO-8601.Por ejemplo:
+     * "2017-08-27T17:54:43.562-05:00"
+     *
+     * @param base64
+     * @return
+>>>>>>> gitlab/master
      */
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

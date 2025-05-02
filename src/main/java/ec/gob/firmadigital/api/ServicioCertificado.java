@@ -15,9 +15,12 @@
  */
 package ec.gob.firmadigital.api;
 
+<<<<<<< HEAD
 import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
 import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
 
+=======
+>>>>>>> gitlab/master
 import java.math.BigInteger;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -32,13 +35,28 @@ import jakarta.ws.rs.core.MediaType;
 /**
  * Este servicio permite verificar si un certificado está revocado.
  *
+<<<<<<< HEAD
  * @author Ricardo Arguello <ricardo.arguello@soportelibre.com>
+=======
+ * @author Ricardo Arguello
+>>>>>>> gitlab/master
  */
 @Path("/certificado")
 public class ServicioCertificado {
 
+<<<<<<< HEAD
     // Servicio REST interno
     private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/certificado";
+=======
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
+    // Servicio REST interno
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/certificado";
+>>>>>>> gitlab/master
 
     @GET
     @Path("/revocado/{serial}")

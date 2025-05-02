@@ -14,12 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
 package ec.gob.firmadigital.api;
 
 import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
 import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
 
+=======
+package ec.gob.firmadigital.api;
+
+>>>>>>> gitlab/master
 import java.util.logging.Logger;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.NotFoundException;
@@ -31,6 +36,10 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
+<<<<<<< HEAD
+=======
+import java.util.logging.Level;
+>>>>>>> gitlab/master
 
 /**
  * Permite validar la si un API URL es permitido.
@@ -40,16 +49,33 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/url")
 public class ServicioApiUrl {
 
+<<<<<<< HEAD
     // Servicio REST interno
     private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/apiurl";
 
     private static final Logger logger = Logger.getLogger(ServicioApiUrl.class.getName());
+=======
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
+
+    // Servicio REST interno
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/apiurl";
+
+    private static final Logger LOGGER = Logger.getLogger(ServicioApiUrl.class.getName());
+>>>>>>> gitlab/master
 
     @GET
     @Path("{base64}")
     @Produces(MediaType.TEXT_PLAIN)
     public String validarEndpoint(@PathParam("base64") String base64) {
+<<<<<<< HEAD
         logger.info("base64=" + base64);
+=======
+        LOGGER.log(Level.INFO, "base64={0}", base64);
+>>>>>>> gitlab/master
         try {
             return buscarUrl(base64);
         } catch (NotFoundException e) {

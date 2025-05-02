@@ -16,15 +16,22 @@
  */
 package ec.gob.firmadigital.api;
 
+<<<<<<< HEAD
 import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
 import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
 
+=======
+>>>>>>> gitlab/master
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+<<<<<<< HEAD
+=======
+import jakarta.ws.rs.WebApplicationException;
+>>>>>>> gitlab/master
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -32,10 +39,15 @@ import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.MediaType;
+<<<<<<< HEAD
+=======
+import org.jboss.resteasy.client.exception.ResteasyClientErrorException;
+>>>>>>> gitlab/master
 
 /**
  * REST Web Service
  *
+<<<<<<< HEAD
  * @author Christian Espinosa <christian.espinosa@mintel.gob.ec>, Misael
  * Fernández
  */
@@ -44,10 +56,26 @@ public class ServicioAppFirmarDocumentoTransversal {
 
     // Servicio REST interno
     private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/appfirmardocumentotransversal";
+=======
+ * @author Christian Espinosa, Misael Fernández
+ */
+@Path("/appfirmardocumentotransversal")
+public class ServicioAppFirmarDocumentoTransversal extends RequestSizeFilter {
+
+    /**
+     * Nombre de la propiedad de sistema que contiene el archivo de
+     * configuracion del servidor WildFly (standalone.xml)
+     */
+    private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio-mobile.url";
+
+    // Servicio REST interno
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/appfirmardocumentotransversal";
+>>>>>>> gitlab/master
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+<<<<<<< HEAD
     public String validarEndpointPost(@FormParam("pkcs12") String pkcs12, @FormParam("password") String password, @FormParam("json") String json, @FormParam("base64") String base64) {
         try {
             return firmarTransversal(pkcs12, password, json, base64);
@@ -57,10 +85,38 @@ public class ServicioAppFirmarDocumentoTransversal {
     }
 
     private String firmarTransversal(String pkcs12, String password, String json, String base64) throws NotFoundException {
+=======
+    public String validarEndpointPost(@FormParam("jwt") String jwt,
+            @FormParam("pkcs12") String pkcs12, @FormParam("password") String password,
+            @FormParam("json") String json, @FormParam("base64") String base64) {
+        try {
+            return firmarTransversal(jwt, pkcs12, password, json, base64);
+        } catch (NotFoundException e) {
+            return "No se encuentra el servidor de búsqueda";
+        } catch (ResteasyClientErrorException e) {
+            return e.getMessage();
+        } catch (WebApplicationException e) {
+            String mensaje;
+            System.out.println("WebApplicationException: " + e.getMessage());
+            if (e.getResponse().hasEntity()) {
+                mensaje = e.getResponse().readEntity(String.class);
+            } else {
+                mensaje = e.toString();
+            }
+            return mensaje;
+        }
+    }
+
+    private String firmarTransversal(String jwt, String pkcs12, String password, String json, String base64) throws NotFoundException {
+>>>>>>> gitlab/master
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(REST_SERVICE_URL);
         Invocation.Builder builder = target.request();
         Form form = new Form();
+<<<<<<< HEAD
+=======
+        form.param("jwt", jwt);
+>>>>>>> gitlab/master
         form.param("pkcs12", pkcs12);
         form.param("password", password);
         form.param("json", json);
