@@ -15,9 +15,6 @@
  */
 package ec.gob.firmadigital.api;
 
-import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
-import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
-
 import java.math.BigInteger;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -44,8 +41,7 @@ public class ServicioCertificado {
     private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/certificado";
-    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/certificado";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/certificado";
 
     @GET
     @Path("/revocado/{serial}")

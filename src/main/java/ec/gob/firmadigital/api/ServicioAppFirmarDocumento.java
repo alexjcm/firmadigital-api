@@ -14,11 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package ec.gob.firmadigital.api;
-
-import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
-import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
 
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.Consumes;
@@ -51,8 +47,7 @@ public class ServicioAppFirmarDocumento extends RequestSizeFilter {
     private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio-mobile.url";
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/appfirmardocumento";
-    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/appfirmardocumento";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/appfirmardocumento";
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

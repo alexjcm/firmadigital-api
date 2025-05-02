@@ -15,9 +15,6 @@
  */
 package ec.gob.firmadigital.api;
 
-import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
-import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
@@ -57,8 +54,7 @@ public class ServicioFirmaDigital {
     private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/documentos";
-    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/documentos";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/documentos";
 
     /**
      * Obterner un documento mediante una invocación REST

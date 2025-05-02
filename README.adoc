@@ -35,6 +35,12 @@ Se establece el subdominio donde se publica el proyecto _firmadigital-servicio_,
         <property name="firmadigital-servicio.url" value="https://impws.firmadigital.gob.ec/servicio"/>
 ----
 
+Se utiliza localhost si el servicio web rest se encuentra en el mismo servidor donde
+esta desplegado la api rest. Si estan en servidores diferentes se deberá utilizar la url pública
+correspondiente.
+firmadigital-servicio.url="http://localhost:7776/servicio"
+
+
 == Cómo desplegar
 
 Se debe copiar el archivo `target/api.war` a la carpeta `standalone/deploy` de un servidor de aplicaciones WildFly

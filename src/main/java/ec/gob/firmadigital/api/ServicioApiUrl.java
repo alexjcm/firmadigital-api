@@ -14,11 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package ec.gob.firmadigital.api;
-
-import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
-import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
 
 import java.util.logging.Logger;
 import jakarta.ws.rs.GET;
@@ -41,7 +37,6 @@ import java.util.logging.Level;
 @Path("/url")
 public class ServicioApiUrl {
 
-    private static final Logger logger = Logger.getLogger(ServicioApiUrl.class.getName());
     /**
      * Nombre de la propiedad de sistema que contiene el archivo de
      * configuracion del servidor WildFly (standalone.xml)
@@ -49,8 +44,9 @@ public class ServicioApiUrl {
     private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/apiurl";
-    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/apiurl";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/apiurl";
+
+    private static final Logger LOGGER = Logger.getLogger(ServicioApiUrl.class.getName());
 
     @GET
     @Path("{base64}")

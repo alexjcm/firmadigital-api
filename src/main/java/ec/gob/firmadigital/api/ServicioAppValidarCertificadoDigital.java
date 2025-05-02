@@ -16,9 +16,6 @@
  */
 package ec.gob.firmadigital.api;
 
-import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
-import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
-
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
@@ -50,9 +47,8 @@ public class ServicioAppValidarCertificadoDigital extends RequestSizeFilter {
     private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio-mobile.url";
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/appvalidarcertificadodigital";
-    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/appvalidarcertificadodigital";
-
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/appvalidarcertificadodigital";
+    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

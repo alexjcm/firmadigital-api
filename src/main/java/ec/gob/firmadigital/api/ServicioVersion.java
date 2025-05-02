@@ -16,11 +16,6 @@
  */
 package ec.gob.firmadigital.api;
 
-import static ec.gob.firmadigital.api.BaseConstants.BASE_URL;
-import static ec.gob.firmadigital.api.BaseConstants.SERVICE_CONTEXT;
-
-import java.util.logging.Logger;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.NotFoundException;
@@ -50,8 +45,7 @@ public class ServicioVersion {
     private static final String WS_SYSTEM_PROPERTY = "firmadigital-servicio.url";
 
     // Servicio REST interno
-    private static final String REST_SERVICE_URL = BASE_URL + SERVICE_CONTEXT + "/version";
-    // private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/version";
+    private static final String REST_SERVICE_URL = System.getProperty(WS_SYSTEM_PROPERTY) + "/version";
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
